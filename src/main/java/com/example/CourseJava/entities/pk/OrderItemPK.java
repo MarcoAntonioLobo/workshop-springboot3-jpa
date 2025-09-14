@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import com.example.CourseJava.entities.Order;
 import com.example.CourseJava.entities.Product;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -17,34 +16,22 @@ public class OrderItemPK implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    @JsonIgnore
     private Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnore
     private Product product;
 
-    public Order getOrder() {
-        return order;
-    }
+    public OrderItemPK() {}
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+    public Order getOrder() { return order; }
+    public void setOrder(Order order) { this.order = order; }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(order, product);
-    }
+    public int hashCode() { return Objects.hash(order, product); }
 
     @Override
     public boolean equals(Object obj) {
