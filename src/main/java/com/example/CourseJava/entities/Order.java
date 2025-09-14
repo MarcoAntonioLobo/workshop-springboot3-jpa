@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.example.CourseJava.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,10 +38,10 @@ public class Order implements Serializable {
     private User client;
 
     @OneToMany(mappedBy = "id.order")
+    @JsonManagedReference
     private Set<OrderItem> items = new HashSet<>();
 
-    public Order() {
-    }
+    public Order() {}
 
     public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
@@ -49,61 +50,33 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Instant getMoment() { return moment; }
+    public void setMoment(Instant moment) { this.moment = moment; }
 
-    public Instant getMoment() {
-        return moment;
-    }
-
-    public void setMoment(Instant moment) {
-        this.moment = moment;
-    }
-
-    public OrderStatus getOrderStatus() {
-        return OrderStatus.valueOf(orderStatus);
-    }
-
+    public OrderStatus getOrderStatus() { return OrderStatus.valueOf(orderStatus); }
     public void setOrderStatus(OrderStatus orderStatus) {
-        if (orderStatus != null) {
-            this.orderStatus = orderStatus.getCode();
-        }
+        if (orderStatus != null) this.orderStatus = orderStatus.getCode();
     }
 
-    public User getClient() {
-        return client;
-    }
+    public User getClient() { return client; }
+    public void setClient(User client) { this.client = client; }
 
-    public void setClient(User client) {
-        this.client = client;
-    }
-
-    public Set<OrderItem> getItems() {
-        return items;
-    }
+    public Set<OrderItem> getItems() { return items; }
 
     public Double getTotal() {
-        return items.stream()
-                .mapToDouble(OrderItem::getSubTotal)
-                .sum();
+        return items.stream().mapToDouble(OrderItem::getSubTotal).sum();
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+    public int hashCode() { return Objects.hash(id); }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         Order other = (Order) obj;
         return Objects.equals(id, other.id);
     }

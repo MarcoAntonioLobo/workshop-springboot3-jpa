@@ -13,83 +13,78 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	@EmbeddedId
-	private OrderItemPK id = new OrderItemPK();
-	
-	private Integer quantity;
-	private Double price;
-	
-	public OrderItem() {
-	}
-	
-	public OrderItem(Order order, Product product, Integer quantity, Double price) {
-		this.id.setOrder(order);
-		this.id.setProduct(product);
-		this.quantity = quantity;
-		this.price = price;
-	}
-	
-	@JsonIgnore
-	public Order getOrder() {
-		return id.getOrder();
-	}
-	
-	public void setOrder(Order order) {
-		id.setOrder(order);
-	}
+    private static final long serialVersionUID = 1L;
 
-	public Product getProduct() {
-		return id.getProduct();
-	}
-	
-	public void setProduct(Product product) {
-		id.setProduct(product);
-	}
+    @EmbeddedId
+    private OrderItemPK id = new OrderItemPK();
 
-	public Integer getQuantity() {
-		return quantity;
-	}
+    private Integer quantity;
+    private Double price;
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+    public OrderItem() {}
 
-	public Double getPrice() {
-		return price;
-	}
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
+        this.id.setOrder(order);
+        this.id.setProduct(product);
+        this.quantity = quantity;
+        this.price = price;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    @JsonIgnore
+    public Order getOrder() {
+        return id.getOrder();
+    }
 
-	public Double getSubTotal() {
-		return price * quantity;
-	}
+    public void setOrder(Order order) {
+        id.setOrder(order);
+    }
 
-	public OrderItemPK getId() {
-		return id;
-	}
+    public Product getProduct() {
+        return id.getProduct();
+    }
 
-	public void setId(OrderItemPK id) {
-		this.id = id;
-	}
+    public void setProduct(Product product) {
+        id.setProduct(product);
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		OrderItem other = (OrderItem) obj;
-		return Objects.equals(id, other.id);
-	}
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getSubTotal() {
+        return price * quantity;
+    }
+
+    public OrderItemPK getId() {
+        return id;
+    }
+
+    public void setId(OrderItemPK id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        OrderItem other = (OrderItem) obj;
+        return Objects.equals(id, other.id);
+    }
 }
