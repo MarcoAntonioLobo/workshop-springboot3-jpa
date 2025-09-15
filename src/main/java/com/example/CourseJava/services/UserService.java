@@ -12,21 +12,26 @@ import com.example.CourseJava.repositories.UserRepository;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository repository;
+	@Autowired
+	private UserRepository repository;
 
-    public List<User> findAll() {
-        return repository.findAll();
-    }
-    
-    public User findById(Long Id) {
-    	Optional <User> obj = repository.findById(Id);
+	public List<User> findAll() {
+		return repository.findAll();
+	}
+
+	public User findById(Long Id) {
+		Optional<User> obj = repository.findById(Id);
 		return obj.get();
-    	
-    }
-    
-    public User insert(User obj) {
-    	return repository.save(obj);
-    }
+
+	}
+
+	public User insert(User obj) {
+		return repository.save(obj);
+	}
+
+	public void delete(Long id) {
+		repository.deleteById(id);
+
+	}
 
 }
