@@ -17,63 +17,64 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_payment")
 public class Payment implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Instant moment;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@OneToOne
-	@MapsId
-	@JsonBackReference
-	private Order order;
+    private Instant moment;
 
-	public Payment() {
-	}
+    @OneToOne
+    @MapsId
+    @JsonBackReference
+    private Order order;
 
-	public Payment(Long id, Instant moment, Order order) {
-		this.id = id;
-		this.moment = moment;
-		this.order = order;
-	}
+    public Payment() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Payment(Long id, Instant moment, Order order) {
+        this.id = id;
+        this.moment = moment;
+        this.order = order;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Instant getMoment() {
-		return moment;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setMoment(Instant moment) {
-		this.moment = moment;
-	}
+    public Instant getMoment() {
+        return moment;
+    }
 
-	public Order getOrder() {
-		return order;
-	}
+    public void setMoment(Instant moment) {
+        this.moment = moment;
+    }
 
-	public void setOrder(Order order) {
-		this.order = order;
-	}
+    public Order getOrder() {
+        return order;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Payment other = (Payment) obj;
-		return Objects.equals(id, other.id);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Payment other = (Payment) obj;
+        return Objects.equals(id, other.id);
+    }
 }

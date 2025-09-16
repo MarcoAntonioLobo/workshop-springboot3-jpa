@@ -31,24 +31,46 @@ public class OrderItem implements Serializable {
     }
 
     @JsonIgnore
-    public Order getOrder() { return id.getOrder(); }
+    public Order getOrder() {
+        return id.getOrder();
+    }
 
-    public Product getProduct() { return id.getProduct(); }
+    public Product getProduct() {
+        return id.getProduct();
+    }
 
-    public void setOrder(Order order) { id.setOrder(order); }
+    public void setOrder(Order order) {
+        id.setOrder(order);
+    }
 
-    public void setProduct(Product product) { id.setProduct(product); }
+    public void setProduct(Product product) {
+        id.setProduct(product);
+    }
 
-    public Integer getQuantity() { return quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-    public Double getPrice() { return price; }
-    public void setPrice(Double price) { this.price = price; }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
-    public Double getSubTotal() { return price * quantity; }
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getSubTotal() {
+        return price * quantity;
+    }
 
     @Override
-    public int hashCode() { return Objects.hash(id); }
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
     @Override
     public boolean equals(Object obj) {

@@ -17,109 +17,119 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Table(name = "tb_product")
 public class Product implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String name;
-	private String description;
-	private Double price;
-	private String imgUrl;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToMany
-	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories = new HashSet<>();
+    @Column(nullable = false)
+    private String name;
 
-	@OneToMany(mappedBy = "id.product")
-	@JsonBackReference
-	private Set<OrderItem> items = new HashSet<>();
+    private String description;
 
-	public Product() {
-	}
+    @Column(nullable = false)
+    private Double price;
 
-	public Product(Long id, String name, String description, Double price, String imgUrl) {
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.imgUrl = imgUrl;
-	}
+    private String imgUrl;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "tb_product_category",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @OneToMany(mappedBy = "id.product", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<OrderItem> items = new HashSet<>();
 
-	public String getName() {
-		return name;
-	}
+    public Product() {
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Product(Long id, String name, String description, Double price, String imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Set<Category> getCategories() {
-		return categories;
-	}
+    public Double getPrice() {
+        return price;
+    }
 
-	public Set<OrderItem> getItems() {
-		return items;
-	}
-	
-	@JsonIgnore
-	public Set<Order> getOrders() {
-		Set<Order> set = new HashSet<>();
-		for (OrderItem x : items) {
-			set.add(x.getOrder());
-		}
-		return set;
-	}
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    public String getImgUrl() {
+        return imgUrl;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		return Objects.equals(id, other.id);
-	}
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    @JsonIgnore
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>();
+        for (OrderItem x : items) {
+            set.add(x.getOrder());
+        }
+        return set;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        return Objects.equals(id, other.id);
+    }
 }
