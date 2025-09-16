@@ -3,7 +3,6 @@ package com.example.CourseJava.config;
 import java.time.Instant;
 import java.util.Arrays;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,24 +24,26 @@ import com.example.CourseJava.repositories.UserRepository;
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProductRepository productRepository;
+    private final OrderItemRepository orderItemRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+    public TestConfig(UserRepository userRepository,
+                      OrderRepository orderRepository,
+                      CategoryRepository categoryRepository,
+                      ProductRepository productRepository,
+                      OrderItemRepository orderItemRepository) {
+        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+        this.orderItemRepository = orderItemRepository;
+    }
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-    
     @Override
     public void run(String... args) throws Exception {
-
         User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
         User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
         userRepository.saveAll(Arrays.asList(u1, u2));
@@ -77,10 +78,9 @@ public class TestConfig implements CommandLineRunner {
         OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
         OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
         orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
-        
-        Payment pay1 = new Payment (null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
         o1.setPayment(pay1);
-        
         orderRepository.save(o1);
     }
 }
